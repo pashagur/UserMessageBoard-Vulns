@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Bulletin Board{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="bulletin-header">
+            <h1 class="mb-3">Bulletin Board</h1>
+            <p class="lead">Share your thoughts and messages with the community.</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Post New Message Form -->
+    <div class="col-md-4 mb-4">
+        <div class="card shadow new-message-form">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Post a Message</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="" class="needs-validation" novalidate>
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.content.label(class="form-label") }}
+                        {% if form.content.errors %}
+                            {{ form.content(class="form-control is-invalid", id="content", rows=5) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.content.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.content(class="form-control", id="content", rows=5, placeholder="What's on your mind?") }}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-grid">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card shadow mt-4">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">Board Information</h4>
+            </div>
+            <div class="card-body">
+                <p><i class="fas fa-info-circle me-2"></i>Welcome to the bulletin board!</p>
+                <p><i class="fas fa-user me-2"></i>Logged in as: <strong>{{ current_user.username }}</strong></p>
+                <p><i class="fas fa-clipboard-list me-2"></i>Total messages: <strong>{{ messages|length }}</strong></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Message Board -->
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Messages</h4>
+            </div>
+            <div class="card-body">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="card message-card mb-3">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div class="message-author">
+                                        <i class="fas fa-user-circle me-2"></i>{{ message.author.username }}
+                                    </div>
+                                    <div class="message-timestamp" data-timestamp="{{ message.timestamp }}">
+                                        {{ message.timestamp.strftime('%b %d, %Y at %H:%M') }}
+                                    </div>
+                                </div>
+                                <div class="message-content mb-3">
+                                    {{ message.content }}
+                                </div>
+                                {% if message.author == current_user %}
+                                    <div class="text-end">
+                                        <form action="{{ url_for('delete_message', message_id=message.id) }}" method="POST" class="d-inline">
+                                            <button type="button" class="btn btn-sm btn-danger delete-message">
+                                                <i class="fas fa-trash me-1"></i>Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>No messages yet. Be the first to post a message!
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

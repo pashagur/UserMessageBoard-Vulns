@@ -7,7 +7,7 @@ from models import User
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[
         DataRequired(),
-        Length(min=3, max=20)
+        Length(min=3, max=50)
     ])
     email = StringField('Email', validators=[
         DataRequired(),
@@ -56,7 +56,7 @@ class MessageForm(FlaskForm):
 class ProfileUpdateForm(FlaskForm):
     username = StringField('Username', validators=[
         DataRequired(),
-        Length(min=3, max=20)
+        Length(min=3, max=50)
     ])
     email = StringField('Email', validators=[
         DataRequired(),

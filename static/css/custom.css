@@ -1,44 +1,10 @@
-/* Custom styles with yellow theme */
+/* Custom styles to complement Bootstrap */
 
 /* Body and general styles */
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #fffdf7;
-}
-
-/* Override Bootstrap theme colors */
-.bg-dark {
-    background-color: #ffd700 !important;
-}
-
-.bg-primary {
-    background-color: #ffb700 !important;
-}
-
-.navbar-dark .navbar-nav .nav-link {
-    color: #000 !important;
-}
-
-.navbar-dark .navbar-brand {
-    color: #000;
-}
-
-.text-white {
-    color: #000 !important;
-}
-
-.btn-primary {
-    background-color: #ffd700;
-    border-color: #ffb700;
-    color: #000;
-}
-
-.btn-primary:hover {
-    background-color: #ffb700;
-    border-color: #ffa500;
-    color: #000;
 }
 
 /* Main content area */
@@ -58,18 +24,10 @@ footer {
     border-radius: 0.5rem;
     transition: transform 0.2s;
     margin-bottom: 1rem;
-    border-color: #ffd700;
-    background-color: #fffbeb;
 }
 
 .message-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
-}
-
-.card {
-    background-color: #fffbeb;
-    border-color: #ffd700;
 }
 
 .message-content {

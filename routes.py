@@ -65,6 +65,8 @@ def bulletin():
     form = MessageForm()
     if form.validate_on_submit():
         message = Message(content=form.content.data, author=current_user)
+        # Increment user's post count
+        current_user.post_count += 1
         db.session.add(message)
         db.session.commit()
         flash('Your message has been posted!', 'success')
@@ -83,6 +85,10 @@ def delete_message(message_id):
     message = Message.query.get_or_404(message_id)
     if message.author != current_user:
         abort(403)  # Forbidden access
+    
+    # Decrement user's post count when message is deleted
+    if current_user.post_count > 0:
+        current_user.post_count -= 1
     
     db.session.delete(message)
     db.session.commit()

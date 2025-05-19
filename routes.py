@@ -20,12 +20,21 @@ def register():
     
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_password = generate_password_hash(form.password.data)
-        user = User(username=form.username.data, email=form.email.data, password_hash=hashed_password)
-        db.session.add(user)
-        db.session.commit()
-        flash('Your account has been created! You can now log in.', 'success')
-        return redirect(url_for('login'))
+        # Ensure password data is not None before hashing
+        password_data = form.password.data
+        if password_data:
+            hashed_password = generate_password_hash(password_data)
+            # Create user with keyword arguments
+            user = User()
+            user.username = form.username.data
+            user.email = form.email.data
+            user.password_hash = hashed_password
+            user.post_count = 0  # Initialize post count
+            
+            db.session.add(user)
+            db.session.commit()
+            flash('Your account has been created! You can now log in.', 'success')
+            return redirect(url_for('login'))
     
     return render_template('register.html', title='Register', form=form)
 
@@ -39,7 +48,9 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and check_password_hash(user.password_hash, form.password.data):
+        password_data = form.password.data
+        # Ensure password data is not None before checking hash
+        if user and password_data and check_password_hash(user.password_hash, password_data):
             login_user(user)
             next_page = request.args.get('next')
             flash('Login successful!', 'success')
@@ -64,9 +75,14 @@ def bulletin():
     """Bulletin board route for viewing and posting messages."""
     form = MessageForm()
     if form.validate_on_submit():
-        message = Message(content=form.content.data, author=current_user)
+        # Create message object properly
+        message = Message()
+        message.content = form.content.data
+        message.user_id = current_user.id
+        
         # Increment user's post count
         current_user.post_count += 1
+        
         db.session.add(message)
         db.session.commit()
         flash('Your message has been posted!', 'success')

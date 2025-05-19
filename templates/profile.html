@@ -107,6 +107,31 @@
             <div class="card-body">
                 <p><strong>Account Created:</strong> {{ current_user.date_joined.strftime('%B %d, %Y') }}</p>
                 <p><strong>Number of Messages:</strong> {{ messages|length }}</p>
+                
+                {% set badge = current_user.get_badge() %}
+                <div class="mt-3 p-3 border rounded" style="border-color: {{ badge.color }}; background-color: rgba(255, 255, 255, 0.1);">
+                    <h5 class="mb-3">Your Activity Badge</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="badge-icon p-3 rounded-circle me-3" style="background-color: {{ badge.color }}; color: white;">
+                            <i class="fas fa-{{ badge.icon }} fa-2x"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-1">{{ badge.name }}</h4>
+                            <p class="mb-0">Post count: {{ current_user.post_count }}</p>
+                            {% if current_user.post_count < 5 %}
+                                <small class="text-muted">Post 5 messages to reach the next level</small>
+                            {% elif current_user.post_count < 10 %}
+                                <small class="text-muted">Post {{ 10 - current_user.post_count }} more to reach Bronze Contributor</small>
+                            {% elif current_user.post_count < 25 %}
+                                <small class="text-muted">Post {{ 25 - current_user.post_count }} more to reach Silver Contributor</small>
+                            {% elif current_user.post_count < 50 %}
+                                <small class="text-muted">Post {{ 50 - current_user.post_count }} more to reach Gold Contributor</small>
+                            {% else %}
+                                <small class="text-muted">You've reached the highest badge level!</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

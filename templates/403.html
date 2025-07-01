@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Access Forbidden | Bulletin Board{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-body text-center">
+                <h1 class="display-1 text-muted">403</h1>
+                <h2 class="mb-4">Access Forbidden</h2>
+                <p class="lead mb-4">You don't have permission to access this resource.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">
+                        <i class="fas fa-home me-2"></i>Go Home
+                    </a>
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('bulletin') }}" class="btn btn-secondary">
+                        <i class="fas fa-clipboard-list me-2"></i>Bulletin Board
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

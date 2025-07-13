@@ -96,6 +96,9 @@ This is a Flask-based bulletin board web application that allows users to regist
 - Environment-specific secret key management
 
 ## Changelog
+- July 13, 2025. Fixed authentication system by resolving Flask-Login is_active property conflict
+- July 13, 2025. Implemented complete avatar system with URL download functionality
+- July 13, 2025. Added user activity badges based on post count
 - July 01, 2025. Initial setup
 
 ## User Preferences

@@ -21,7 +21,6 @@ db = SQLAlchemy(model_class=Base)
 # Create the Flask app
 app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key")
-app.config['WTF_CSRF_TIME_LIMIT'] = None  # Disable CSRF time limit for testing
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)  # needed for url_for to generate with https
 
 # Configure the database

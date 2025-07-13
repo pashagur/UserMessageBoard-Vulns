@@ -11,7 +11,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
     date_joined = db.Column(db.DateTime, default=datetime.utcnow)
-    active = db.Column(db.Boolean, default=True)  # renamed to avoid conflict with UserMixin
+    is_active = db.Column(db.Boolean, default=True)  # renamed to avoid conflict with UserMixin
     post_count = db.Column(db.Integer, default=0)
     avatar_url = db.Column(db.Text)
     
@@ -20,11 +20,6 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return f'<User {self.username}>'
-    
-    @property
-    def is_active(self):
-        """Flask-Login requires is_active property."""
-        return self.active
         
     def get_badge(self):
         """Determine user's activity badge based on post count."""

@@ -48,6 +48,21 @@
                         {% endif %}
                     </div>
                     
+                    <div class="mb-3">
+                        {{ form.avatar_url.label(class="form-label") }}
+                        {% if form.avatar_url.errors %}
+                            {{ form.avatar_url(class="form-control is-invalid", placeholder="https://example.com/avatar.jpg") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.avatar_url.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.avatar_url(class="form-control", placeholder="https://example.com/avatar.jpg") }}
+                        {% endif %}
+                        <div class="form-text">Enter a URL to an image to use as your avatar. The image will be downloaded and stored.</div>
+                    </div>
+                    
                     <hr class="my-4">
                     <h5>Change Password (Optional)</h5>
                     
@@ -105,6 +120,13 @@
                 <h4 class="mb-0">Account Information</h4>
             </div>
             <div class="card-body">
+                <div class="text-center mb-3">
+                    <img src="{{ current_user.get_avatar_url() }}" 
+                         alt="{{ current_user.username }}'s avatar" 
+                         class="rounded-circle mb-2" 
+                         style="width: 100px; height: 100px; object-fit: cover;">
+                    <h5>{{ current_user.username }}</h5>
+                </div>
                 <p><strong>Account Created:</strong> {{ current_user.date_joined.strftime('%B %d, %Y') }}</p>
                 <p><strong>Number of Messages:</strong> {{ messages|length }}</p>
                 

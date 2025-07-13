@@ -1,4 +1,6 @@
 from datetime import datetime
+import os
+import requests
 from app import db
 from flask_login import UserMixin
 
@@ -11,6 +13,7 @@ class User(UserMixin, db.Model):
     date_joined = db.Column(db.DateTime, default=datetime.utcnow)
     is_active = db.Column(db.Boolean, default=True)  # renamed to avoid conflict with UserMixin
     post_count = db.Column(db.Integer, default=0)
+    avatar_url = db.Column(db.Text)
     
     # Relationship with Message model
     messages = db.relationship('Message', backref='author', lazy=True, cascade="all, delete-orphan")
@@ -50,6 +53,51 @@ class User(UserMixin, db.Model):
                 'icon': 'user',
                 'color': '#808080'
             }
+    
+    def get_avatar_filename(self):
+        """Generate a unique filename for the user's avatar."""
+        return f"avatar_{self.id}.jpg"
+    
+    def get_avatar_path(self):
+        """Get the full path to the user's avatar file."""
+        return os.path.join('static', 'avatars', self.get_avatar_filename())
+    
+    def download_avatar(self, url):
+        """Download avatar from URL and save it locally."""
+        try:
+            # Create avatars directory if it doesn't exist
+            avatars_dir = os.path.join('static', 'avatars')
+            os.makedirs(avatars_dir, exist_ok=True)
+            
+            # Download the image
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            
+            # Check if it's an image
+            content_type = response.headers.get('content-type', '')
+            if not content_type.startswith('image/'):
+                return False, "URL does not point to an image"
+            
+            # Save the image
+            avatar_path = self.get_avatar_path()
+            with open(avatar_path, 'wb') as f:
+                f.write(response.content)
+            
+            return True, "Avatar downloaded successfully"
+            
+        except requests.exceptions.RequestException as e:
+            return False, f"Failed to download avatar: {str(e)}"
+        except Exception as e:
+            return False, f"Error saving avatar: {str(e)}"
+    
+    def get_avatar_url(self):
+        """Get the URL for the user's avatar or default avatar."""
+        avatar_path = self.get_avatar_path()
+        if os.path.exists(avatar_path):
+            return f"/static/avatars/{self.get_avatar_filename()}"
+        else:
+            # Return a default avatar URL
+            return f"https://ui-avatars.com/api/?name={self.username}&background=random&size=64"
 
 
 class Message(db.Model):

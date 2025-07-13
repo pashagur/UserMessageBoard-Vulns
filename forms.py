@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, URLField
+from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError, URL, Optional
 from models import User
 
 
@@ -61,6 +61,10 @@ class ProfileUpdateForm(FlaskForm):
     email = StringField('Email', validators=[
         DataRequired(),
         Email()
+    ])
+    avatar_url = URLField('Avatar URL', validators=[
+        Optional(),
+        URL(message='Please enter a valid URL')
     ])
     current_password = PasswordField('Current Password')
     new_password = PasswordField('New Password')

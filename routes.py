@@ -132,6 +132,15 @@ def profile():
             current_user.password_hash = generate_password_hash(form.new_password.data)
             flash('Your password has been updated.', 'success')
         
+        # Handle avatar URL update
+        if form.avatar_url.data:
+            success, message = current_user.download_avatar(form.avatar_url.data)
+            if success:
+                current_user.avatar_url = form.avatar_url.data
+                flash(message, 'success')
+            else:
+                flash(message, 'danger')
+        
         # Update username and email
         current_user.username = form.username.data
         current_user.email = form.email.data
@@ -142,6 +151,7 @@ def profile():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
+        form.avatar_url.data = current_user.avatar_url
     
     # Get user's messages
     messages = Message.query.filter_by(user_id=current_user.id).order_by(Message.timestamp.desc()).all()

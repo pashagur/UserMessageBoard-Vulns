@@ -1,0 +1,53 @@
+When you are done, output the following JSON:
+    {
+      "done": true,
+      "executive_summary": "...",
+      "code_base_title": "...",
+      "language": "...",
+      "api_endpoints": [
+        {"method" : "GET / POST / PUT / DELETE / PATCH",
+         "url": "/api/v1/endpoint1",
+         "parameters": ["username", "password"],
+         "request_content_type": "application/json", # e.g. application/json, application/xml, text/html, etc. or "unknown" if not specified
+         "response_content_type": "application/json", # e.g. application/json, application/xml, text/html, etc. or "unknown" if not specified
+         "expected_response": "...",
+         "purpose": "Purpose, required params, sanitization logic, response format, and auth requirements"},
+      ],
+      "webpages": [
+        {"uri": "/login",
+         "purpose": "HTML page description, POST handler used, form parameters, any client-side validation, auth/session behavior"},
+      ],
+      "datasources": [
+        {"name": "db-sqlite",
+         "type": "DATABASE / FILE / API",
+         "tables": [
+         # when known, list table names
+         "table_name(column1, column2, column3, ...)",
+         ],
+         "description": "Description of the data source (e.g. SQLite database used to store user data)"},
+      ],
+      "auth": "how authentication is implemented (e.g. user authenticate using email and password and is given a JWT token, consisting of the following structure: {'user_id': '1', 'role': 'admin', 'iat': 1626262626, 'exp': 1626262626})",
+      "business_logic": "business logic description (who are the users, what are the business services the application provides, how is it being administered, etc.)",
+      "architecture": "...",
+      "detected_frameworks": [],
+      "detected_secrets": [
+        # list any secret found in the codebase or configuration files that might help an attacker to perform an attack
+        # when providing values, limit the size by 4096 characters, not less
+        { "type": "certificate", "*path": "...", "*value": "..." },
+        { "type": "password", "*path": "...", "*value": "..." },
+        { "type": "config_file", "*path": "...", "*value": "..." },
+        { "type": "token", "*path": "...", "*value": "..." },
+        { "type": "key", "*path": "...", "*value": "..." },
+        { "type": "secret", "*path": "...", "*value": "..." },
+        ...
+      ],
+      "potential_security_risks": [
+        "Concrete example: Stored XSS via <input name='color'> in /endpoint1 (stored unsanitized into HTML attribute)",
+        "CSRF risk: /endpoint2 uses GET, lacks token, can be embedded in <img> tags",
+        ... # list concrete examples for exploitation paths
+      ],
+      "3rd_party_libs": [
+        {"name": "...", "version": "...", "purpose": "...", "security_considerations": "..."}, ...
+      ],
+      "tech_stack": "Languages, runtime, storage format (e.g. pickle/SQL), template engines, network usage"
+    }

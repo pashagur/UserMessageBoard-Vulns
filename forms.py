@@ -1,13 +1,34 @@
+import re
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, URLField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError, URL, Optional
 from models import User
 
 
+def validate_no_html_js(form, field):
+    """Custom validator to prevent HTML/JavaScript content in usernames."""
+    dangerous_patterns = [
+        r'<[^>]*>',  # HTML tags
+        r'javascript:',  # JavaScript protocol
+        r'on\w+\s*=',  # JavaScript event handlers
+        r'&[#\w]+;',  # HTML entities
+        r'[<>"\']',  # Potentially dangerous characters
+    ]
+    
+    for pattern in dangerous_patterns:
+        if re.search(pattern, field.data, re.IGNORECASE):
+            raise ValidationError('Username cannot contain HTML, JavaScript, or special characters.')
+    
+    # Only allow alphanumeric characters, underscores, hyphens, and spaces
+    if not re.match(r'^[a-zA-Z0-9_\-\s]+$', field.data):
+        raise ValidationError('Username can only contain letters, numbers, underscores, hyphens, and spaces.')
+
+
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[
         DataRequired(),
-        Length(min=3, max=50)
+        Length(min=3, max=50),
+        validate_no_html_js
     ])
     email = StringField('Email', validators=[
         DataRequired(),
@@ -51,12 +72,26 @@ class MessageForm(FlaskForm):
         Length(min=1, max=500)
     ])
     submit = SubmitField('Post Message')
+    
+    def validate_content(self, content):
+        """Validate message content to prevent XSS attacks."""
+        dangerous_patterns = [
+            r'<script[^>]*>.*?</script>',  # Script tags
+            r'<iframe[^>]*>.*?</iframe>',  # Iframe tags
+            r'javascript:',  # JavaScript protocol
+            r'on\w+\s*=',  # JavaScript event handlers
+        ]
+        
+        for pattern in dangerous_patterns:
+            if re.search(pattern, content.data, re.IGNORECASE | re.DOTALL):
+                raise ValidationError('Message content cannot contain potentially harmful scripts or code.')
 
 
 class ProfileUpdateForm(FlaskForm):
     username = StringField('Username', validators=[
         DataRequired(),
-        Length(min=3, max=50)
+        Length(min=3, max=50),
+        validate_no_html_js
     ])
     email = StringField('Email', validators=[
         DataRequired(),

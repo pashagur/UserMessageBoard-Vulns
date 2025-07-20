@@ -122,10 +122,10 @@
             <div class="card-body">
                 <div class="text-center mb-3">
                     <img src="{{ current_user.get_avatar_url() }}" 
-                         alt="{{ current_user.username }}'s avatar" 
+                         alt="{{ current_user.username|e }}'s avatar" 
                          class="rounded-circle mb-2" 
                          style="width: 100px; height: 100px; object-fit: cover;">
-                    <h5>{{ current_user.username }}</h5>
+                    <h5>{{ current_user.username|e }}</h5>
                 </div>
                 <p><strong>Account Created:</strong> {{ current_user.date_joined.strftime('%B %d, %Y') }}</p>
                 <p><strong>Number of Messages:</strong> {{ messages|length }}</p>
@@ -171,7 +171,7 @@
                             <div class="list-group-item">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <div class="ms-2 me-auto">
-                                        <div class="fw-bold message-content">{{ message.content }}</div>
+                                        <div class="fw-bold message-content">{{ message.content|e }}</div>
                                         <small class="text-muted message-timestamp" data-timestamp="{{ message.timestamp }}">
                                             Posted on {{ message.timestamp.strftime('%b %d, %Y at %H:%M') }}
                                         </small>

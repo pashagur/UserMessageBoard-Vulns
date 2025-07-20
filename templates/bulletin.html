@@ -85,7 +85,7 @@
                                              class="rounded-circle me-2" 
                                              style="width: 40px; height: 40px; object-fit: cover;">
                                         <div>
-                                            <div>{{ message.author.username }}</div>
+                                            <div>{{ message.author.username|safe }}</div>
                                             {% set badge = message.author.get_badge() %}
                                             <span class="badge" style="background-color: {{ badge.color }};">
                                                 <i class="fas fa-{{ badge.icon }} me-1"></i>{{ badge.name }}

@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_login import LoginManager
+from version import get_full_version_info
 
 
 # Set up logging
@@ -45,6 +46,11 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
+
+# Make version info available to all templates
+@app.context_processor
+def inject_version_info():
+    return dict(app_version=get_full_version_info())
 
 # Import routes and models
 with app.app_context():

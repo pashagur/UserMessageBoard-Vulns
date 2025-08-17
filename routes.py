@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import app, db
 from models import User, Message
 from forms import RegistrationForm, LoginForm, MessageForm, ProfileUpdateForm
+from version import get_full_version_info, VERSION, BUILD_INFO
 
 
 @app.route('/')
@@ -175,3 +176,23 @@ def forbidden(e):
 def internal_server_error(e):
     """500 error handler."""
     return render_template('500.html'), 500
+
+
+@app.route('/version')
+@login_required
+def version_info():
+    """Display application version information."""
+    version_info = get_full_version_info()
+    
+    # Additional system information
+    system_info = {
+        'python_version': f"{VERSION['major']}.{VERSION['minor']}.{VERSION['patch']}",
+        'flask_version': '2.3.0+',
+        'database': 'PostgreSQL' if 'postgresql://' in app.config.get('SQLALCHEMY_DATABASE_URI', '') else 'SQLite',
+        'security_features': ['XSS Protection', 'CSRF Protection', 'Password Hashing', 'Session Security']
+    }
+    
+    return render_template('version_info.html', 
+                         title='Version Information', 
+                         version=version_info,
+                         system=system_info)

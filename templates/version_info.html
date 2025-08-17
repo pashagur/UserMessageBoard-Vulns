@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}Version Information | Bulletin Board{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mb-4">
+            <i class="fas fa-info-circle me-3"></i>Version Information
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Application Version -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-code-branch me-2"></i>Application Version
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-sm-4 fw-bold">Version:</div>
+                    <div class="col-sm-8">
+                        <span class="badge bg-success fs-6">{{ version.version }}</span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-4 fw-bold">Release Name:</div>
+                    <div class="col-sm-8">{{ version.release_name }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-4 fw-bold">Build Date:</div>
+                    <div class="col-sm-8">{{ version.build_date }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 fw-bold">Full Version:</div>
+                    <div class="col-sm-8">
+                        <code class="bg-light p-1 rounded">{{ version.full_string }}</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Information -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-server me-2"></i>System Information
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-sm-4 fw-bold">Python:</div>
+                    <div class="col-sm-8">{{ system.python_version }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-4 fw-bold">Flask:</div>
+                    <div class="col-sm-8">{{ system.flask_version }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-4 fw-bold">Database:</div>
+                    <div class="col-sm-8">
+                        <span class="badge bg-info">{{ system.database }}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 fw-bold">Security:</div>
+                    <div class="col-sm-8">
+                        {% for feature in system.security_features %}
+                            <span class="badge bg-success me-1 mb-1">{{ feature }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Features & Changes -->
+    <div class="col-md-12 mb-4">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-shield-alt me-2"></i>Recent Security Enhancements
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Security Improvements:</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Cross-Site Scripting (XSS) Protection
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Input Validation & Sanitization
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Secure Password Hashing
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                CSRF Protection
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Application Features:</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-user text-primary me-2"></i>
+                                User Authentication System
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-comments text-primary me-2"></i>
+                                Community Message Board
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-trophy text-primary me-2"></i>
+                                Activity Badge System
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-image text-primary me-2"></i>
+                                Avatar Upload System
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-center">
+            <a href="{{ url_for('bulletin') }}" class="btn btn-primary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Bulletin Board
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

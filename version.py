@@ -7,7 +7,7 @@ Update this file when releasing new versions.
 VERSION = {
     'major': 1,
     'minor': 2,
-    'patch': 0,
+    'patch': 1,
     'release': 'stable'  # Options: 'alpha', 'beta', 'rc', 'stable'
 }
 

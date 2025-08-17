@@ -148,12 +148,10 @@ def seed_database():
         create_sample_messages(users)
         
         print("Database seeding completed!")
-        print("\nSample login credentials:")
-        print("Email: alice@example.com, Password: password123 (Gold)")
-        print("Email: bob@example.com, Password: password123 (Silver)")
-        print("Email: charlie@example.com, Password: password123 (Bronze)")
-        print("Email: diana@example.com, Password: password123 (Active)")
-        print("Email: eve@example.com, Password: password123 (New)")
+        print("\nLogin credentials for created/existing users:")
+        for user in users:
+            badge = user.get_badge()
+            print(f"Email: {user.email}, Password: password123 ({badge['name']})")
 
 if __name__ == "__main__":
     seed_database()

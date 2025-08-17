@@ -17,6 +17,7 @@
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('index') }}">
                 <i class="fas fa-clipboard-list me-2"></i>Bulletin Board
+                <small class="text-muted ms-2">{{ app_version.version }}</small>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,15 +93,8 @@
     <!-- Footer -->
     <footer class="bg-dark text-light py-3">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="mb-0">© 2025 Bulletin Board | A secure message board application</p>
-                </div>
-                <div class="col-md-6 text-end">
-                    <small class="text-muted">
-                        {{ app_version.full_string }} | Build: {{ app_version.build_date }}
-                    </small>
-                </div>
+            <div class="text-center">
+                <p class="mb-0">© 2025 Bulletin Board | A secure message board application</p>
             </div>
         </div>
     </footer>

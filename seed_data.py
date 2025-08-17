@@ -47,6 +47,13 @@ def create_sample_users():
             'password': 'password123',
             'post_count': 2,   # New member
             'days_ago': 5
+        },
+        {
+            'username': 'canary_user',
+            'email': 'canary@email.com',
+            'password': 'secretpassword',
+            'post_count': 1337,   
+            'days_ago': 5
         }
     ]
     
@@ -56,7 +63,13 @@ def create_sample_users():
         # Check if user already exists
         existing_user = User.query.filter_by(username=user_data['username']).first()
         if existing_user:
-            print(f"User {user_data['username']} already exists, skipping...")
+            print(f"User {user_data['username']} already exists:")
+            print(f"  - Email: {existing_user.email}")
+            print(f"  - Password: {user_data['password']} (original seed password)")
+            print(f"  - Post count: {existing_user.post_count}")
+            badge = existing_user.get_badge()
+            print(f"  - Badge: {badge['name']}")
+            print()
             created_users.append(existing_user)
             continue
             
@@ -70,6 +83,12 @@ def create_sample_users():
         db.session.add(user)
         created_users.append(user)
         print(f"Created user: {user.username}")
+        print(f"  - Email: {user.email}")
+        print(f"  - Password: {user_data['password']}")
+        print(f"  - Post count: {user.post_count}")
+        badge = user.get_badge()
+        print(f"  - Badge: {badge['name']}")
+        print()
     
     db.session.commit()
     return created_users

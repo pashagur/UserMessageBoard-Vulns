@@ -6,6 +6,7 @@ WARNING: This will permanently delete all data!
 """
 
 import os
+import sys
 import shutil
 from app import app, db
 from models import User, Message
@@ -47,17 +48,9 @@ def cleanup_avatars():
 
 def cleanup_all():
     """Main function to clean up all data."""
-    print("=" * 50)
-    print("WARNING: This will permanently delete ALL data!")
-    print("- All user accounts")
-    print("- All messages")
-    print("- All avatar images")
-    print("=" * 50)
-    
-    confirm = input("Are you sure you want to proceed? Type 'DELETE ALL' to confirm: ")
-    
-    if confirm == "DELETE ALL":
-        print("\nStarting cleanup process...")
+    # Check for /delete_all parameter
+    if len(sys.argv) > 1 and sys.argv[1] == "/delete_all":
+        print("Non-interactive mode: Proceeding with deletion...")
         
         # Clean database
         cleanup_database()
@@ -70,7 +63,30 @@ def cleanup_all():
         print("You can run seed_data.py to populate with sample data again.")
         
     else:
-        print("Cleanup cancelled. No data was deleted.")
+        print("=" * 50)
+        print("WARNING: This will permanently delete ALL data!")
+        print("- All user accounts")
+        print("- All messages")
+        print("- All avatar images")
+        print("=" * 50)
+        
+        confirm = input("Are you sure you want to proceed? Type 'DELETE ALL' to confirm: ")
+        
+        if confirm == "DELETE ALL":
+            print("\nStarting cleanup process...")
+            
+            # Clean database
+            cleanup_database()
+            
+            # Clean avatar files
+            cleanup_avatars()
+            
+            print("\nCleanup completed successfully!")
+            print("The database and avatar files have been cleared.")
+            print("You can run seed_data.py to populate with sample data again.")
+            
+        else:
+            print("Cleanup cancelled. No data was deleted.")
 
 if __name__ == "__main__":
     cleanup_all()

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Bulletin Board{% endblock %}</title>
+    <title>{% block title %}Alpha BSS{% endblock %}</title>
     <!-- Bootstrap CSS from Replit CDN -->
     <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
     <!-- Font Awesome Icons -->
@@ -16,7 +16,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('index') }}">
-                <i class="fas fa-clipboard-list me-2"></i>Bulletin Board
+                <i class="fas fa-clipboard-list me-2"></i>Alpha BSS
                 <small class="text-muted ms-2">{{ app_version.version }}</small>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -32,7 +32,7 @@
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == url_for('bulletin') %}active{% endif %}" 
-                           href="{{ url_for('bulletin') }}">Bulletin Board</a>
+                           href="{{ url_for('bulletin') }}">Alpha BSS</a>
                     </li>
                     {% endif %}
                 </ul>

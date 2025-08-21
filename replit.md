@@ -1,8 +1,8 @@
-# Bulletin Board Application
+# Alpha BSS Application
 
 ## Overview
 
-This is a Flask-based bulletin board web application that allows users to register, login, and post messages to a shared community bulletin board. The application features user authentication, message posting, and user profiles with activity badges based on posting frequency.
+This is a Flask-based Alpha BSS web application that allows users to register, login, and post messages to a shared community bulletin board. The application features user authentication, message posting, and user profiles with activity badges based on posting frequency.
 
 ## System Architecture
 
@@ -97,6 +97,7 @@ This is a Flask-based bulletin board web application that allows users to regist
 
 ## Changelog
 - July 01, 2025. Initial setup
+- August 21, 2025. Changed application name from "Bulletin Board" to "Alpha BSS"
 
 ## User Preferences
 

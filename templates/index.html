@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Welcome to Alpha BSS{% endblock %}
+{% block title %}Welcome to Alpha BBS{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-8 text-center">
         <div class="mb-5 mt-4">
-            <h1 class="display-4 mb-4">Welcome to Alpha BSS</h1>
+            <h1 class="display-4 mb-4">Welcome to Alpha BBS</h1>
             <p class="lead">A simple platform for sharing messages with your community.</p>
             <hr class="my-4">
             <p>Join our growing community and start posting messages today!</p>
@@ -14,7 +14,7 @@
             {% if current_user.is_authenticated %}
                 <div class="mt-4">
                     <a href="{{ url_for('bulletin') }}" class="btn btn-primary btn-lg">
-                        <i class="fas fa-clipboard-list me-2"></i>Go to Alpha BSS
+                        <i class="fas fa-clipboard-list me-2"></i>Go to Alpha BBS
                     </a>
                 </div>
             {% else %}
@@ -35,7 +35,7 @@
                     <div class="card-body">
                         <i class="fas fa-users fa-3x mb-3 text-primary"></i>
                         <h3>Community</h3>
-                        <p>Connect with others through our Alpha BSS platform.</p>
+                        <p>Connect with others through our Alpha BBS platform.</p>
                     </div>
                 </div>
             </div>

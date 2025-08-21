@@ -10,7 +10,7 @@ from version import get_full_version_info, VERSION, BUILD_INFO
 @app.route('/')
 def index():
     """Home page route."""
-    return render_template('index.html', title='Welcome to Alpha BSS')
+    return render_template('index.html', title='Welcome to Alpha BBS')
 
 
 @app.route('/register', methods=['GET', 'POST'])
